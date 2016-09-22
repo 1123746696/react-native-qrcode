@@ -1,0 +1,3 @@
+rootProject.name = 'RCTQRCode'
+
+include ':app'
