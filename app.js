@@ -18,16 +18,16 @@ class RCTQRCode extends Component {
         }
     }
     componentDidMount(){
-        // QRCode.didGetRQCodeSuccess(({code,type})=>{
-        //     console.log('code====,',code,type)
-        //     this.setState({
-        //         code:code,
-        //         type:type
-        //     })
-        //     QRCode.closeQRCodePage().then((isClosed)=>{
-        //
-        //     })
-        // })
+        QRCode.didGetRQCodeSuccess(({code,type})=>{
+            console.log('code====,',code,type)
+            this.setState({
+                code:code,
+                type:type
+            })
+            QRCode.closeQRCodePage().then((isClosed)=>{
+                console.log('close====,',isClosed)
+            })
+        })
     }
     openQRCode(){
         QRCode.openQRCodePage(1);

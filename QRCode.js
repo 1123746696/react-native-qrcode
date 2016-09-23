@@ -1,7 +1,13 @@
 /**
  * Created by user on 16/9/22.
  */
-var QRCodeModule = require('react-native').NativeModules.QRCode;
+import React, {
+    NativeModules,
+    DeviceEventEmitter, //android
+    NativeAppEventEmitter, //ios
+    Platform,
+} from 'react-native';
+var QRCodeModule = NativeModules.QRCode;
 var didGetRQCodeSuccessSubscription
 var QRCode={
     /***
@@ -16,6 +22,19 @@ var QRCode={
     },
     didGetRQCodeSuccess(handler: Function){
         didGetRQCodeSuccessSubscription = this.addEventListener(QRCodeModule.DidGetRQCodeSuccess, handler);
-    }
+    },
+    addEventListener(eventName: string, handler: Function) {
+        if(Platform.OS === 'android') {
+            return DeviceEventEmitter.addListener(eventName, (event) => {
+                handler(event);
+            });
+        }
+        else {
+            return NativeAppEventEmitter.addListener(
+                eventName, (userInfo) => {
+                    handler(userInfo);
+                });
+        }
+    },
 };
 module.exports = QRCode;
